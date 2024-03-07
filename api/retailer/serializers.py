@@ -1,7 +1,12 @@
 from rest_framework import serializers
-from .models import Briefing
+from .models import Retailer
 
-class BriefingSerializer(serializers.ModelSerializer):
+class RetailerSerializer(serializers.ModelSerializer):
+    vendors = serializers.SlugRelatedField(
+        many=True, 
+        read_only=True,
+        slug_field="name"
+    )
     class Meta:
-        model = Briefing
+        model = Retailer
         fields = ["id","name","vendors"]

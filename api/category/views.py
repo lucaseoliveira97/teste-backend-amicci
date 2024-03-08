@@ -14,5 +14,6 @@ class CategoryCreateView (generics.CreateAPIView):
 class CategoryRetrieveUpdateView (generics.RetrieveUpdateAPIView):
     queryset=Category.objects.all()
     serializer_class=CategorySerializer
+    http_method_names = ["get","put", "post"]
 
 

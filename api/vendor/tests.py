@@ -35,6 +35,12 @@ class VendorAPITest(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(Vendor.objects.count(), 1)
         self.assertEqual(Vendor.objects.get().name, 'ret2')
+
+    def test_create_vendor_wrong_data(self):
+        data = {'namee': 'ret2'}
+        url = '/api/demo/vendor/'
+        response = self.client.post(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
     
     def test_get_vendor_not_found(self):
         url = '/api/demo/vendor/1'
@@ -55,3 +61,10 @@ class VendorAPITest(APITestCase):
         response = self.client.put(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(Vendor.objects.get().name, 'ret2')
+
+    def test_put_vendor_wrong_data(self):
+        Vendor.objects.create(id=1,name="ret1")
+        url = '/api/demo/vendor/1'
+        data = {'namee': 'ret2'}
+        response = self.client.put(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)

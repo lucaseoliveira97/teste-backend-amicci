@@ -8,7 +8,7 @@ class RetailerSerializer(serializers.ModelSerializer):
         many=True, 
         read_only=False,
         queryset=Vendor.objects.all(),
-        slug_field="name"
+        slug_field="name",
     )
     class Meta:
         model = Retailer

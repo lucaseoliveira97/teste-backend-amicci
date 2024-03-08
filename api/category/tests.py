@@ -35,7 +35,19 @@ class CategoryAPITest(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(Category.objects.count(), 1)
         self.assertEqual(Category.objects.get().name, 'cat2')
-    
+
+    def test_create_category_invalid(self):
+        data = {'name': 'cat2'}
+        url = '/api/demo/category/'
+        response = self.client.post(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_create_category_wrong_path(self):
+        data = {'name': 'cat2'}
+        url = '/api/demo/categoryy/'
+        response = self.client.post(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
     def test_get_category_not_found(self):
         url = '/api/demo/category/1'
         response = self.client.get(url)
@@ -55,3 +67,10 @@ class CategoryAPITest(APITestCase):
         response = self.client.put(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(Category.objects.get().name, 'cat2')
+
+    def test_put_category_erro_object(self):
+        Category.objects.create(id=1,name="cat1", description="cat1 desc")
+        url = '/api/demo/category/1'
+        data = {'namee': 'cat2', "description":"cat2 desc"}
+        response = self.client.put(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)

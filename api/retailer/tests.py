@@ -39,6 +39,30 @@ class RetailerAPITest(APITestCase):
         self.assertEqual(Retailer.objects.count(), 1)
         self.assertEqual(Retailer.objects.get().name, 'ret2')
     
+    def test_create_retailer_without_vendor(self):
+        Vendor.objects.create(id=1,name="vet1")
+        data = {'name': 'ret2', "vendors":[]}
+        url = '/api/demo/retailer/'
+        response = self.client.post(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(Retailer.objects.count(), 1)
+        self.assertEqual(Retailer.objects.get().name, 'ret2')
+
+    def test_create_retailer_vendor_does_not_exist(self):
+        Vendor.objects.create(id=1,name="vet1")
+        data = {'name': 'ret2', "vendors":["vet2"]}
+        url = '/api/demo/retailer/'
+        response = self.client.post(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_create_retailer_wrong_data(self):
+        Vendor.objects.create(id=1,name="vet1")
+        data = {'name': 'ret2', "vendorrs":[]}
+        url = '/api/demo/retailer/'
+        response = self.client.post(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+
     def test_get_retailer_not_found(self):
         url = '/api/demo/retailer/1'
         response = self.client.get(url)
@@ -58,3 +82,10 @@ class RetailerAPITest(APITestCase):
         response = self.client.put(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(Retailer.objects.get().name, 'ret2')
+
+    def test_put_retailer_object_invalid(self):
+        Retailer.objects.create(id=1,name="ret1")
+        url = '/api/demo/retailer/1'
+        data = {'name': 'ret2',"vendorrs":[]}
+        response = self.client.put(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)

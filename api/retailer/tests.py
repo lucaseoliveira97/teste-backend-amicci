@@ -1,12 +1,14 @@
 from django.test import TestCase
 from rest_framework.test import APITestCase
 from rest_framework import status
+
+from vendor.models import Vendor
 from .models import Retailer
 from .serializers import RetailerSerializer
 
 class RetailerModelSerializer(TestCase):
     def test_serializer_valid_data(self):
-        data = {'name':'ret 1'}
+        data = {'name':'ret 1', "vendors":[]}
         serializer = RetailerSerializer(data=data)
         self.assertTrue(serializer.is_valid())
 
@@ -29,7 +31,8 @@ class RetailerAPITest(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_create_retailer(self):
-        data = {'name': 'ret2'}
+        Vendor.objects.create(id=1,name="vet1")
+        data = {'name': 'ret2', "vendors":["vet1"]}
         url = '/api/demo/retailer/'
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
@@ -51,7 +54,7 @@ class RetailerAPITest(APITestCase):
     def test_put_retailer(self):
         Retailer.objects.create(id=1,name="ret1")
         url = '/api/demo/retailer/1'
-        data = {'name': 'ret2'}
+        data = {'name': 'ret2',"vendors":[]}
         response = self.client.put(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(Retailer.objects.get().name, 'ret2')

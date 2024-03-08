@@ -1,3 +1,18 @@
 from django.shortcuts import render
+from rest_framework import generics
+from .models import Vendor
+from .serializers import VendorSerializer
 
-# Create your views here.
+class VendorsListView (generics.ListAPIView):
+    queryset=Vendor.objects.all()
+    serializer_class=VendorSerializer
+
+class VendorCreateView (generics.CreateAPIView):
+    queryset=Vendor.objects.all()
+    serializer_class=VendorSerializer
+
+class VendorRetrieveUpdateView (generics.RetrieveUpdateAPIView):
+    queryset=Vendor.objects.all()
+    serializer_class=VendorSerializer
+
+

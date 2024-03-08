@@ -1,7 +1,7 @@
 from rest_framework import serializers
-from .models import Briefing
+from .models import Vendor
 
-class BriefingSerializer(serializers.ModelSerializer):
+class VendorSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Briefing
-        fields = ["id","name"]
+        model = Vendor
+        fields = ["id","name","retailer"]

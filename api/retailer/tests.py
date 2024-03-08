@@ -6,12 +6,12 @@ from .serializers import RetailerSerializer
 
 class RetailerModelSerializer(TestCase):
     def test_serializer_valid_data(self):
-        data = {'name':'Vendor 1'}
+        data = {'name':'ret 1'}
         serializer = RetailerSerializer(data=data)
         self.assertTrue(serializer.is_valid())
 
     def test_serializer_not_valid_data(self):
-        data = {'nome':'Vendor 1'}
+        data = {'nome':'ret 1'}
         serializer = RetailerSerializer(data=data)
         self.assertFalse(serializer.is_valid())
 

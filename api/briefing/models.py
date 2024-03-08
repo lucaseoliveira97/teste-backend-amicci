@@ -1,5 +1,7 @@
 from django.db import models
 
+from category.models import Category
+
 class Briefing(models.Model):
     class Meta:
 
@@ -8,7 +10,7 @@ class Briefing(models.Model):
     name = models.CharField(max_length=200)
     retailer = models.CharField(max_length=200)
     responsible = models.CharField(max_length=200)
-    category = models.CharField(max_length=200)
+    category = models.ForeignKey(Category, related_name="category", on_delete=models.CASCADE)
     release_date = models.CharField(max_length=200)
     availabe = models.IntegerField()
 

@@ -1,0 +1,26 @@
+[
+    {
+        "model": "category.category",
+        "pk": 1,
+        "fields": {
+          "name": "Novo Produto",
+          "description": "Novo Produto"
+        }
+    },
+    {
+      "model": "category.category",
+      "pk": 2,
+      "fields": {
+        "name": "Troca de Fornecedor",
+        "description": "Troca de Fornecedor"
+      }
+  },
+  {
+    "model": "category.category",
+    "pk": 3,
+    "fields": {
+      "name": "Reformulação de Produto",
+      "description": "Reformulação de Produto"
+    }
+}
+  ]

@@ -14,5 +14,6 @@ class VendorCreateView (generics.CreateAPIView):
 class VendorRetrieveUpdateView (generics.RetrieveUpdateAPIView):
     queryset=Vendor.objects.all()
     serializer_class=VendorSerializer
+    http_method_names = ["get","put", "post"]
 
 

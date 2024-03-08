@@ -1,10 +1,14 @@
 #!/bin/bash
 echo "Creating Migrations..."
-python manage.py makemigrations djangoapp
+python manage.py makemigrations 
 echo ====================================
 
 echo "Starting Migrations..."
 python manage.py migrate
+echo ====================================
+
+echo "Starting Category Data..."
+python manage.py loaddata ./api/fixtures/categories.json
 echo ====================================
 
 echo "Starting Server..."
